@@ -6,6 +6,8 @@ from typing import Optional
 
 @frappe.whitelist()
 def generate_test_masters(docname: Optional[str] = None) -> bool:
+    if not frappe.has_permission("IRD Certification", "write"):
+        frappe.throw(_("Not permitted to generate test masters."), frappe.PermissionError)
     if not docname:
         frappe.throw(_("Missing IRD Certification document name."))
     settings = frappe.get_doc("IRD Certification", docname)
@@ -112,6 +114,8 @@ def generate_test_masters(docname: Optional[str] = None) -> bool:
 
 @frappe.whitelist()
 def generate_test_transactions(docname: Optional[str] = None) -> bool:
+    if not frappe.has_permission("IRD Certification", "write"):
+        frappe.throw(_("Not permitted to generate test transactions."), frappe.PermissionError)
     if not docname:
         frappe.throw(_("Missing IRD Certification document name."))
     try:
@@ -239,6 +243,8 @@ def generate_test_transactions(docname: Optional[str] = None) -> bool:
 
 @frappe.whitelist()
 def check_test_data_status(docname: Optional[str] = None) -> dict[str, bool]:
+    if not frappe.has_permission("IRD Certification", "read"):
+        frappe.throw(_("Not permitted to check test data status."), frappe.PermissionError)
     if not docname:
         frappe.throw(_("Missing IRD Certification document name."))
     
